@@ -19,6 +19,25 @@ export const users = pgTable('users', {
   deletedAt: timestamp('deleted_at'),
 });
 
+export const snippets = pgTable('snippets', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  code: text('code').notNull(),
+  language: varchar('language', { length: 100 }).notNull(),
+  description: text('description'),
+  tags: text('tags').array(),
+  userId: integer('user_id')
+    .notNull()
+    .references(() => users.id),
+  teamId: integer('team_id').references(() => teams.id),
+  visibility: varchar('visibility', { length: 20 })
+    .notNull()
+    .default('private'),
+  embedding: text('embedding'), // Stores JSON string of the vector
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+  updatedAt: timestamp('updated_at').notNull().defaultNow(),
+});
+
 export const teams = pgTable('teams', {
   id: serial('id').primaryKey(),
   name: varchar('name', { length: 100 }).notNull(),
@@ -72,11 +91,13 @@ export const teamsRelations = relations(teams, ({ many }) => ({
   teamMembers: many(teamMembers),
   activityLogs: many(activityLogs),
   invitations: many(invitations),
+  snippets: many(snippets),
 }));
 
 export const usersRelations = relations(users, ({ many }) => ({
   teamMembers: many(teamMembers),
   invitationsSent: many(invitations),
+  snippets: many(snippets),
 }));
 
 export const invitationsRelations = relations(invitations, ({ one }) => ({
@@ -87,6 +108,17 @@ export const invitationsRelations = relations(invitations, ({ one }) => ({
   invitedBy: one(users, {
     fields: [invitations.invitedBy],
     references: [users.id],
+  }),
+}));
+
+export const snippetsRelations = relations(snippets, ({ one }) => ({
+  user: one(users, {
+    fields: [snippets.userId],
+    references: [users.id],
+  }),
+  team: one(teams, {
+    fields: [snippets.teamId],
+    references: [teams.id],
   }),
 }));
 
@@ -122,6 +154,8 @@ export type ActivityLog = typeof activityLogs.$inferSelect;
 export type NewActivityLog = typeof activityLogs.$inferInsert;
 export type Invitation = typeof invitations.$inferSelect;
 export type NewInvitation = typeof invitations.$inferInsert;
+export type Snippet = typeof snippets.$inferSelect;
+export type NewSnippet = typeof snippets.$inferInsert;
 export type TeamDataWithMembers = Team & {
   teamMembers: (TeamMember & {
     user: Pick<User, 'id' | 'name' | 'email'>;
