@@ -85,3 +85,51 @@ export const deleteContact = validatedActionWithUser(
     return { success: 'Contact deleted' };
   }
 );
+
+const updateContactSchema = z.object({
+  contactId: z.string().min(1),
+  name: z.string().min(1, 'Name is required').max(200),
+  email: z.string().email().optional().or(z.literal('')),
+  phone: z.string().max(50).optional(),
+  company: z.string().max(200).optional(),
+  jobTitle: z.string().max(150).optional(),
+  notes: z.string().max(5000).optional(),
+  status: z.enum(['active', 'inactive', 'lead', 'client']),
+});
+
+export const updateContact = validatedActionWithUser(
+  updateContactSchema,
+  async (data, formData, user) => {
+    const userWithTeam = await getUserWithTeam(user.id);
+    if (!userWithTeam?.teamId) {
+      return { error: 'Team not found' };
+    }
+
+    await db
+      .update(contacts)
+      .set({
+        name: data.name,
+        email: data.email || null,
+        phone: data.phone || null,
+        company: data.company || null,
+        jobTitle: data.jobTitle || null,
+        notes: data.notes || null,
+        status: data.status,
+        updatedAt: new Date(),
+      })
+      .where(
+        and(eq(contacts.id, parseInt(data.contactId)), eq(contacts.teamId, userWithTeam.teamId))
+      );
+
+    await db.insert(activityLogs).values({
+      teamId: userWithTeam.teamId,
+      userId: user.id,
+      action: ActivityType.UPDATE_CONTACT,
+    });
+
+    revalidatePath('/dashboard/contacts');
+    revalidatePath(`/dashboard/contacts/${data.contactId}`);
+
+    return { success: 'Contact updated' };
+  }
+);

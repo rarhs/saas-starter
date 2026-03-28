@@ -60,6 +60,25 @@ function UserMenu() {
   }
 
   return (
+    <>
+      <Link
+        href="#features"
+        className="hidden sm:block text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+      >
+        Features
+      </Link>
+      <Link
+        href="/pricing"
+        className="hidden sm:block text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+      >
+        Pricing
+      </Link>
+      <Link
+        href="/dashboard"
+        className="hidden sm:block text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+      >
+        Dashboard
+      </Link>
     <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
       <DropdownMenuTrigger>
         <Avatar className="cursor-pointer size-9">
@@ -97,6 +116,7 @@ function UserMenu() {
         </form>
       </DropdownMenuContent>
     </DropdownMenu>
+    </>
   );
 }
 
