@@ -16,7 +16,7 @@ import {
   ActivityType,
   invitations,
 } from '@/lib/db/schema';
-import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session';
+import { comparePasswords, hashPassword, setSession, signToken, verifyToken } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { createCheckoutSession } from '@/lib/payments/stripe';
@@ -448,4 +448,76 @@ export const inviteTeamMember = validatedActionWithUser(
 
     return { success: 'Invitation sent successfully' };
   },
+);
+
+// --- Forgot / Reset Password ---
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+});
+
+export const forgotPassword = validatedAction(
+  forgotPasswordSchema,
+  async (data) => {
+    const { email } = data;
+
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (user) {
+      const token = await signToken({
+        user: { id: user.id },
+        expires: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // 1 hour
+      });
+
+      const resetUrl = `${process.env.BASE_URL || 'http://localhost:3001'}/reset-password?token=${token}`;
+
+      // TODO: Send email with resetUrl
+      // For development, log to console:
+      console.log(`[Password Reset] ${email}: ${resetUrl}`);
+    }
+
+    // Always show the same message to prevent email enumeration
+    return { success: 'If an account exists with that email, a password reset link has been sent.' };
+  }
+);
+
+const resetPasswordSchema = z.object({
+  token: z.string().min(1, 'Reset token is required'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
+});
+
+export const resetPassword = validatedAction(
+  resetPasswordSchema,
+  async (data) => {
+    const { token, password } = data;
+
+    try {
+      const payload = await verifyToken(token);
+      if (!payload?.user?.id) {
+        return { error: 'Invalid or expired reset link.' };
+      }
+
+      if (new Date(payload.expires) < new Date()) {
+        return { error: 'This reset link has expired. Please request a new one.' };
+      }
+
+      const passwordHash = await hashPassword(password);
+      await db
+        .update(users)
+        .set({ passwordHash })
+        .where(eq(users.id, payload.user.id));
+
+      return { success: 'Password reset successfully. You can now sign in.' };
+    } catch {
+      return { error: 'Invalid or expired reset link.' };
+    }
+  }
 );
