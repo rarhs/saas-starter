@@ -5,11 +5,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-if (!process.env.POSTGRES_URL) {
-  throw new Error('POSTGRES_URL environment variable is not set');
+const connectionString = process.env.POSTGRES_URL;
+
+if (!connectionString) {
+  console.warn('POSTGRES_URL not set — database queries will fail at runtime');
 }
 
-export const client = postgres(process.env.POSTGRES_URL, {
+export const client = postgres(connectionString || 'postgresql://localhost:5432/placeholder', {
   max: 1,
   idle_timeout: 20,
   connect_timeout: 10,
