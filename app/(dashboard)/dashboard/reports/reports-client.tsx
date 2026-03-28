@@ -176,7 +176,7 @@ export function ReportsClient({
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                {report.count} {report.countLabel} will be exported
+                {report.count} {report.count === 1 ? report.countLabel.replace(/s$/, '') : report.countLabel} will be exported
               </p>
               {canExport ? (
                 <Button
