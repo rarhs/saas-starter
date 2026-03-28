@@ -4,6 +4,7 @@ import { getStripePrices, getStripeProducts } from '@/lib/payments/stripe';
 import { SubmitButton } from './submit-button';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { getUser } from '@/lib/db/queries';
 
 export const revalidate = 3600;
 
@@ -27,6 +28,8 @@ const faqs = [
 ];
 
 export default async function PricingPage() {
+  const user = await getUser();
+
   const [prices, products] = await Promise.all([
     getStripePrices(),
     getStripeProducts(),
@@ -96,7 +99,9 @@ export default async function PricingPage() {
                   variant="outline"
                   className="w-full rounded-full h-11"
                 >
-                  <Link href="/sign-up">Start Free Trial</Link>
+                  <Link href={user ? '/dashboard' : '/sign-up'}>
+                    {user ? 'Go to Dashboard' : 'Start Free Trial'}
+                  </Link>
                 </Button>
               </div>
             </div>

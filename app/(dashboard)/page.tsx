@@ -10,8 +10,12 @@ import {
   Clock,
 } from 'lucide-react';
 import Link from 'next/link';
+import { getUser } from '@/lib/db/queries';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const user = await getUser();
+  const ctaHref = user ? '/dashboard' : '/sign-up';
+  const ctaLabel = user ? 'Go to Dashboard' : 'Start Free Trial';
   return (
     <main>
       {/* Hero */}
@@ -40,17 +44,19 @@ export default function HomePage() {
                   size="lg"
                   className="bg-gray-900 hover:bg-gray-800 text-white rounded-full text-base px-8 h-12 shadow-lg shadow-gray-900/10"
                 >
-                  <Link href="/sign-up">
-                    Start Free Trial
+                  <Link href={ctaHref}>
+                    {ctaLabel}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <Link
-                  href="/pricing"
-                  className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors underline underline-offset-4 decoration-gray-300 hover:decoration-gray-900"
-                >
-                  View pricing
-                </Link>
+                {!user && (
+                  <Link
+                    href="/pricing"
+                    className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors underline underline-offset-4 decoration-gray-300 hover:decoration-gray-900"
+                  >
+                    View pricing
+                  </Link>
+                )}
               </div>
               <p className="mt-4 text-sm text-gray-400">
                 14-day free trial. No credit card required.
@@ -389,8 +395,8 @@ export default function HomePage() {
               size="lg"
               className="bg-white hover:bg-gray-100 text-gray-900 rounded-full text-base px-8 h-12 font-medium"
             >
-              <Link href="/sign-up">
-                Get Started Free
+              <Link href={ctaHref}>
+                {user ? 'Go to Dashboard' : 'Get Started Free'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
