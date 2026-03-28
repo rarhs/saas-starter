@@ -441,8 +441,8 @@ export default async function HomePage() {
             <div>
               <h4 className="text-sm font-semibold text-gray-900 mb-3">Legal</h4>
               <ul className="space-y-2">
-                <li><span className="text-sm text-gray-400">Privacy Policy</span></li>
-                <li><span className="text-sm text-gray-400">Terms of Service</span></li>
+                <li><Link href="/privacy" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
