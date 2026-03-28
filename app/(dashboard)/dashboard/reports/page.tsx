@@ -9,6 +9,9 @@ import {
 } from '@/lib/db/queries';
 import { isTrialActive } from '@/lib/payments/limits';
 import { ReportsClient } from './reports-client';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Reports' };
 
 export default async function ReportsPage() {
   const user = await getUser();

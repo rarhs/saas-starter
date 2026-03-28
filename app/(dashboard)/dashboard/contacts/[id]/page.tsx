@@ -10,6 +10,9 @@ import {
 } from '@/lib/db/queries';
 import Link from 'next/link';
 import { contactStatusConfig, formatStatus } from '@/lib/utils';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Contact Details' };
 
 export default async function ContactDetailPage({
   params,

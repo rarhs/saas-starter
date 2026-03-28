@@ -1,6 +1,9 @@
 import { redirect } from 'next/navigation';
 import { Settings } from './settings';
 import { getTeamForUser, getUser } from '@/lib/db/queries';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Team Settings' };
 
 export default async function SettingsPage() {
   const user = await getUser();

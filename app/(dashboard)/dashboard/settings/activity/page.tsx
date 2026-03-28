@@ -23,6 +23,9 @@ import {
 } from 'lucide-react';
 import { ActivityType } from '@/lib/db/schema';
 import { getActivityLogs } from '@/lib/db/queries';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Activity Log' };
 
 const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.SIGN_UP]: UserPlus,

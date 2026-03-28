@@ -17,6 +17,9 @@ import {
 } from '@/lib/db/queries';
 import Link from 'next/link';
 import { taskStatusColors, formatDate, formatStatus } from '@/lib/utils';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Dashboard' };
 
 export default async function DashboardPage() {
   const user = await getUser();

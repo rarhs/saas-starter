@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { getUser } from '@/lib/db/queries';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Project Management for Teams' };
 
 export default async function HomePage() {
   const user = await getUser();

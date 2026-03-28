@@ -5,7 +5,10 @@ import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 
 export const metadata: Metadata = {
-  title: 'ProjectHub - Project Management for Teams',
+  title: {
+    default: 'ProjectHub - Project Management for Teams',
+    template: '%s | ProjectHub',
+  },
   description: 'Manage projects, track tasks, and organize contacts. Simple project management built for teams that ship.',
 };
 

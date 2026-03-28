@@ -6,6 +6,9 @@ import {
   getTasksByProject,
 } from '@/lib/db/queries';
 import { ProjectDetail } from './project-detail';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Project Details' };
 
 export default async function ProjectDetailPage({
   params,

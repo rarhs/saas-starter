@@ -5,6 +5,9 @@ import { SubmitButton } from './submit-button';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { getUser } from '@/lib/db/queries';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Pricing' };
 
 export const revalidate = 3600;
 

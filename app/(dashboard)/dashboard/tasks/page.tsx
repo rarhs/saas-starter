@@ -1,6 +1,9 @@
 import { redirect } from 'next/navigation';
 import { getUser, getTeamForUser, getTasksByTeam, getProjectsByTeam } from '@/lib/db/queries';
 import { TaskList } from './task-list';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = { title: 'Tasks' };
 
 export default async function TasksPage() {
   const user = await getUser();
