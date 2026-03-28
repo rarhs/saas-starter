@@ -10,6 +10,17 @@ export const metadata: Metadata = {
     template: '%s | ProjectHub',
   },
   description: 'Manage projects, track tasks, and organize contacts. Simple project management built for teams that ship.',
+  openGraph: {
+    title: 'ProjectHub - Project Management for Teams',
+    description: 'Manage projects, track tasks, and organize contacts. Simple project management built for teams that ship.',
+    siteName: 'ProjectHub',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ProjectHub - Project Management for Teams',
+    description: 'Manage projects, track tasks, and organize contacts. Simple project management built for teams that ship.',
+  },
 };
 
 export const viewport: Viewport = {
