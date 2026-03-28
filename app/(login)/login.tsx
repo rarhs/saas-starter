@@ -6,7 +6,13 @@ import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CircleIcon, Loader2 } from 'lucide-react';
+import {
+  Loader2,
+  FolderKanban,
+  CheckSquare,
+  Users,
+  BarChart3,
+} from 'lucide-react';
 import { signIn, signUp } from './actions';
 import { ActionState } from '@/lib/auth/middleware';
 
@@ -17,35 +23,119 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
   const inviteId = searchParams.get('inviteId');
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     mode === 'signin' ? signIn : signUp,
-    { error: '' },
+    { error: '' }
   );
 
+  const benefits = [
+    { icon: FolderKanban, title: 'Project Tracking', desc: 'Organize and monitor all your projects in one place' },
+    { icon: CheckSquare, title: 'Task Management', desc: 'Create, assign, and track tasks with your team' },
+    { icon: Users, title: 'Contact Management', desc: 'Keep all your clients and leads organized' },
+    { icon: BarChart3, title: 'Reports & Export', desc: 'Get insights and export data when you need it' },
+  ];
+
+  const inputClasses =
+    'h-11 rounded-lg border border-gray-200 bg-white px-4 text-sm placeholder:text-gray-400 focus:border-gray-400 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0';
+
   return (
-    <div className="min-h-[100dvh] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <CircleIcon className="h-12 w-12 text-orange-500" />
+    <div className="min-h-[100dvh] flex">
+      {/* Left panel — benefits */}
+      <div className="hidden lg:flex lg:w-[45%] bg-gray-900 text-white p-12 flex-col justify-between relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-gray-800 via-gray-900 to-gray-900" />
+        <div className="relative">
+          <Link href="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center">
+              <span className="text-gray-900 text-sm font-bold">P</span>
+            </div>
+            <span className="text-lg font-semibold tracking-tight">
+              ProjectHub
+            </span>
+          </Link>
         </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {mode === 'signin'
-            ? 'Sign in to your account'
-            : 'Create your account'}
-        </h2>
+        <div className="relative space-y-8">
+          <div>
+            <h2 className="text-3xl font-bold leading-tight">
+              {mode === 'signin'
+                ? 'Welcome back.'
+                : 'Start managing projects with clarity.'}
+            </h2>
+            <p className="mt-3 text-gray-400 text-base">
+              {mode === 'signin'
+                ? 'Sign in to continue where you left off.'
+                : 'Join hundreds of teams shipping faster with ProjectHub.'}
+            </p>
+          </div>
+          <div className="space-y-4">
+            {benefits.map((b) => (
+              <div key={b.title} className="flex items-start gap-3">
+                <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <b.icon className="h-4 w-4 text-white/70" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-white">{b.title}</p>
+                  <p className="text-xs text-gray-500">{b.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="relative">
+          <p className="text-xs text-gray-600">
+            &copy; {new Date().getFullYear()} ProjectHub
+          </p>
+        </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <form className="space-y-6" action={formAction}>
-          <input type="hidden" name="redirect" value={redirect || ''} />
-          <input type="hidden" name="priceId" value={priceId || ''} />
-          <input type="hidden" name="inviteId" value={inviteId || ''} />
-          <div>
-            <Label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </Label>
-            <div className="mt-1">
+      {/* Right panel — form */}
+      <div className="flex-1 flex flex-col justify-center px-6 sm:px-12 lg:px-16 py-12 bg-white">
+        <div className="w-full max-w-md mx-auto">
+          {/* Mobile logo */}
+          <div className="lg:hidden mb-8">
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-gray-900 flex items-center justify-center">
+                <span className="text-white text-sm font-bold">P</span>
+              </div>
+              <span className="text-lg font-semibold text-gray-900 tracking-tight">
+                ProjectHub
+              </span>
+            </Link>
+          </div>
+
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
+            {mode === 'signin' ? 'Sign in' : 'Create an account'}
+          </h1>
+          <p className="mt-2 text-sm text-gray-500">
+            {mode === 'signin'
+              ? 'Enter your credentials to access your workspace.'
+              : 'Get started with your 14-day free trial.'}
+          </p>
+
+          <form className="mt-8 space-y-5" action={formAction}>
+            <input type="hidden" name="redirect" value={redirect || ''} />
+            <input type="hidden" name="priceId" value={priceId || ''} />
+            <input type="hidden" name="inviteId" value={inviteId || ''} />
+
+            {mode === 'signup' && (
+              <div>
+                <Label htmlFor="name" className="text-sm font-medium text-gray-700">
+                  Full Name
+                </Label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  maxLength={100}
+                  className={`mt-1.5 ${inputClasses}`}
+                  placeholder="Your full name"
+                />
+              </div>
+            )}
+
+            <div>
+              <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                Email
+              </Label>
               <Input
                 id="email"
                 name="email"
@@ -54,87 +144,95 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
                 defaultValue={state.email}
                 required
                 maxLength={50}
-                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-                placeholder="Enter your email"
+                className={`mt-1.5 ${inputClasses}`}
+                placeholder="you@company.com"
               />
             </div>
-          </div>
 
-          <div>
-            <Label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </Label>
-            <div className="mt-1">
+            <div>
+              <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                Password
+              </Label>
               <Input
                 id="password"
                 name="password"
                 type="password"
-                autoComplete={
-                  mode === 'signin' ? 'current-password' : 'new-password'
-                }
+                autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
                 defaultValue={state.password}
                 required
                 minLength={8}
                 maxLength={100}
-                className="appearance-none rounded-full relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
-                placeholder="Enter your password"
+                className={`mt-1.5 ${inputClasses}`}
+                placeholder={mode === 'signin' ? 'Enter your password' : 'Min. 8 characters'}
               />
             </div>
-          </div>
 
-          {state?.error && (
-            <div className="text-red-500 text-sm">{state.error}</div>
-          )}
+            {mode === 'signup' && (
+              <div>
+                <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                  Confirm Password
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  maxLength={100}
+                  className={`mt-1.5 ${inputClasses}`}
+                  placeholder="Confirm your password"
+                />
+              </div>
+            )}
 
-          <div>
+            {state?.error && (
+              <div className="text-red-600 text-sm bg-red-50 px-3 py-2 rounded-lg">
+                {state.error}
+              </div>
+            )}
+
             <Button
               type="submit"
-              className="w-full flex justify-center items-center py-2 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
               disabled={pending}
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white h-11 rounded-lg text-sm font-medium"
             >
               {pending ? (
                 <>
                   <Loader2 className="animate-spin mr-2 h-4 w-4" />
-                  Loading...
+                  {mode === 'signin' ? 'Signing in...' : 'Creating account...'}
                 </>
               ) : mode === 'signin' ? (
                 'Sign in'
               ) : (
-                'Sign up'
+                'Create account'
               )}
             </Button>
-          </div>
-        </form>
+          </form>
 
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-gray-50 text-gray-500">
-                {mode === 'signin'
-                  ? 'New to our platform?'
-                  : 'Already have an account?'}
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Link
-              href={`${mode === 'signin' ? '/sign-up' : '/sign-in'}${
-                redirect ? `?redirect=${redirect}` : ''
-              }${priceId ? `&priceId=${priceId}` : ''}`}
-              className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-full shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-            >
-              {mode === 'signin'
-                ? 'Create an account'
-                : 'Sign in to existing account'}
-            </Link>
-          </div>
+          <p className="mt-6 text-center text-sm text-gray-500">
+            {mode === 'signin' ? (
+              <>
+                Don&#39;t have an account?{' '}
+                <Link
+                  href={`/sign-up${redirect ? `?redirect=${redirect}` : ''}${priceId ? `&priceId=${priceId}` : ''}`}
+                  className="font-medium text-gray-900 hover:underline"
+                >
+                  Sign up
+                </Link>
+              </>
+            ) : (
+              <>
+                Already have an account?{' '}
+                <Link
+                  href={`/sign-in${redirect ? `?redirect=${redirect}` : ''}${priceId ? `&priceId=${priceId}` : ''}`}
+                  className="font-medium text-gray-900 hover:underline"
+                >
+                  Sign in
+                </Link>
+              </>
+            )}
+          </p>
         </div>
       </div>
     </div>

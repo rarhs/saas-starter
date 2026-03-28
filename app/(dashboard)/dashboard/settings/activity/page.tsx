@@ -9,6 +9,16 @@ import {
   UserMinus,
   Mail,
   CheckCircle,
+  FolderPlus,
+  FolderEdit,
+  FolderMinus,
+  ListPlus,
+  ListChecks,
+  ListX,
+  Edit,
+  Contact,
+  MessageSquare,
+  FileDown,
   type LucideIcon,
 } from 'lucide-react';
 import { ActivityType } from '@/lib/db/schema';
@@ -25,6 +35,18 @@ const iconMap: Record<ActivityType, LucideIcon> = {
   [ActivityType.REMOVE_TEAM_MEMBER]: UserMinus,
   [ActivityType.INVITE_TEAM_MEMBER]: Mail,
   [ActivityType.ACCEPT_INVITATION]: CheckCircle,
+  [ActivityType.CREATE_PROJECT]: FolderPlus,
+  [ActivityType.UPDATE_PROJECT]: FolderEdit,
+  [ActivityType.DELETE_PROJECT]: FolderMinus,
+  [ActivityType.CREATE_TASK]: ListPlus,
+  [ActivityType.UPDATE_TASK]: Edit,
+  [ActivityType.COMPLETE_TASK]: ListChecks,
+  [ActivityType.DELETE_TASK]: ListX,
+  [ActivityType.CREATE_CONTACT]: Contact,
+  [ActivityType.UPDATE_CONTACT]: Contact,
+  [ActivityType.DELETE_CONTACT]: Contact,
+  [ActivityType.ADD_COMMENT]: MessageSquare,
+  [ActivityType.EXPORT_REPORT]: FileDown,
 };
 
 function getRelativeTime(date: Date) {
@@ -32,12 +54,15 @@ function getRelativeTime(date: Date) {
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
   if (diffInSeconds < 60) return 'just now';
+  const minutes = Math.floor(diffInSeconds / 60);
   if (diffInSeconds < 3600)
-    return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+  const hours = Math.floor(diffInSeconds / 3600);
   if (diffInSeconds < 86400)
-    return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+  const days = Math.floor(diffInSeconds / 86400);
   if (diffInSeconds < 604800)
-    return `${Math.floor(diffInSeconds / 86400)} days ago`;
+    return `${days} day${days !== 1 ? 's' : ''} ago`;
   return date.toLocaleDateString();
 }
 
@@ -63,6 +88,30 @@ function formatAction(action: ActivityType): string {
       return 'You invited a team member';
     case ActivityType.ACCEPT_INVITATION:
       return 'You accepted an invitation';
+    case ActivityType.CREATE_PROJECT:
+      return 'You created a project';
+    case ActivityType.UPDATE_PROJECT:
+      return 'You updated a project';
+    case ActivityType.DELETE_PROJECT:
+      return 'You deleted a project';
+    case ActivityType.CREATE_TASK:
+      return 'You created a task';
+    case ActivityType.UPDATE_TASK:
+      return 'You updated a task';
+    case ActivityType.COMPLETE_TASK:
+      return 'You completed a task';
+    case ActivityType.DELETE_TASK:
+      return 'You deleted a task';
+    case ActivityType.CREATE_CONTACT:
+      return 'You added a contact';
+    case ActivityType.UPDATE_CONTACT:
+      return 'You updated a contact';
+    case ActivityType.DELETE_CONTACT:
+      return 'You deleted a contact';
+    case ActivityType.ADD_COMMENT:
+      return 'You added a comment';
+    case ActivityType.EXPORT_REPORT:
+      return 'You exported a report';
     default:
       return 'Unknown action occurred';
   }
@@ -115,7 +164,7 @@ export default async function ActivityPage() {
               </h3>
               <p className="text-sm text-gray-500 max-w-sm">
                 When you perform actions like signing in or updating your
-                account, they'll appear here.
+                account, they&apos;ll appear here.
               </p>
             </div>
           )}

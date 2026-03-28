@@ -5,8 +5,8 @@ import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
 
 export const metadata: Metadata = {
-  title: 'Next.js SaaS Starter',
-  description: 'Get started quickly with Next.js, Postgres, and Stripe.',
+  title: 'ProjectHub - Project Management for Teams',
+  description: 'Manage projects, track tasks, and organize contacts. Simple project management built for teams that ship.',
 };
 
 export const viewport: Viewport = {

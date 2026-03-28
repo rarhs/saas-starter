@@ -1,122 +1,452 @@
 import { Button } from '@/components/ui/button';
-import { ArrowRight, CreditCard, Database } from 'lucide-react';
-import { Terminal } from './terminal';
+import {
+  ArrowRight,
+  CheckSquare,
+  FolderKanban,
+  Users,
+  BarChart3,
+  Zap,
+  Shield,
+  Clock,
+} from 'lucide-react';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
     <main>
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
-            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
-              <h1 className="text-4xl font-bold text-gray-900 tracking-tight sm:text-5xl md:text-6xl">
-                Build Your SaaS
-                <span className="block text-orange-500">Faster Than Ever</span>
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-orange-50 via-white to-white" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 lg:pt-28 lg:pb-36">
+          <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-xs font-medium text-gray-600 mb-8">
+                <Zap className="h-3.5 w-3.5 text-orange-500" />
+                Now with team collaboration
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 tracking-tight leading-[1.1]">
+                Your team&#39;s work,{' '}
+                <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
+                  finally visible
+                </span>
               </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                Launch your SaaS product in record time with our powerful,
-                ready-to-use template. Packed with modern technologies and
-                essential integrations.
+              <p className="mt-6 text-lg text-gray-500 leading-relaxed">
+                ProjectHub brings your projects, tasks, and contacts into one
+                clear workspace. Stop juggling tools — start shipping.
               </p>
-              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
-                <a
-                  href="https://vercel.com/templates/next.js/next-js-saas-starter"
-                  target="_blank"
+              <div className="mt-10 flex items-center gap-4 flex-wrap">
+                <Button
+                  asChild
+                  size="lg"
+                  className="bg-gray-900 hover:bg-gray-800 text-white rounded-full text-base px-8 h-12 shadow-lg shadow-gray-900/10"
                 >
-                  <Button className="bg-white hover:bg-gray-100 text-black border border-gray-200 rounded-full text-lg px-8 py-4 inline-flex items-center justify-center">
-                    Deploy your own
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </a>
+                  <Link href="/sign-up">
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Link
+                  href="/pricing"
+                  className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors underline underline-offset-4 decoration-gray-300 hover:decoration-gray-900"
+                >
+                  View pricing
+                </Link>
               </div>
-            </div>
-            <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
-              <Terminal />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-white w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-3 lg:gap-8">
-            <div>
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                <svg viewBox="0 0 24 24" className="h-6 w-6">
-                  <path
-                    fill="currentColor"
-                    d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.157-1.316.29-2.016.39.24-.375.48-.762.705-1.158.225-.39.435-.788.636-1.18zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-11.83.01c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"
-                  />
-                </svg>
-              </div>
-              <div className="mt-5">
-                <h2 className="text-lg font-medium text-gray-900">
-                  Next.js and React
-                </h2>
-                <p className="mt-2 text-base text-gray-500">
-                  Leverage the power of modern web technologies for optimal
-                  performance and developer experience.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-10 lg:mt-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                <Database className="h-6 w-6" />
-              </div>
-              <div className="mt-5">
-                <h2 className="text-lg font-medium text-gray-900">
-                  Postgres and Drizzle ORM
-                </h2>
-                <p className="mt-2 text-base text-gray-500">
-                  Robust database solution with an intuitive ORM for efficient
-                  data management and scalability.
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-10 lg:mt-0">
-              <div className="flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                <CreditCard className="h-6 w-6" />
-              </div>
-              <div className="mt-5">
-                <h2 className="text-lg font-medium text-gray-900">
-                  Stripe Integration
-                </h2>
-                <p className="mt-2 text-base text-gray-500">
-                  Seamless payment processing and subscription management with
-                  industry-leading Stripe integration.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
-                Ready to launch your SaaS?
-              </h2>
-              <p className="mt-3 max-w-3xl text-lg text-gray-500">
-                Our template provides everything you need to get your SaaS up
-                and running quickly. Don't waste time on boilerplate - focus on
-                what makes your product unique.
+              <p className="mt-4 text-sm text-gray-400">
+                14-day free trial. No credit card required.
               </p>
             </div>
-            <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
-              <a href="https://github.com/nextjs/saas-starter" target="_blank">
-                <Button className="bg-white hover:bg-gray-100 text-black border border-gray-200 rounded-full text-xl px-12 py-6 inline-flex items-center justify-center">
-                  View the code
-                  <ArrowRight className="ml-3 h-6 w-6" />
-                </Button>
-              </a>
+
+            {/* Product preview */}
+            <div className="mt-16 lg:mt-0 relative">
+              <div className="absolute -inset-4 bg-gradient-to-tr from-orange-100/40 to-blue-100/40 rounded-3xl blur-2xl" />
+              <div className="relative rounded-2xl border border-gray-200/80 bg-white shadow-2xl shadow-gray-200/50 overflow-hidden">
+                {/* Window chrome */}
+                <div className="border-b border-gray-100 px-5 py-3.5 flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-gray-200" />
+                  </div>
+                  <div className="flex-1 flex justify-center">
+                    <div className="bg-gray-50 rounded-md px-12 py-1 text-[10px] text-gray-400 font-mono">
+                      projecthub.io/dashboard
+                    </div>
+                  </div>
+                </div>
+                {/* Dashboard content */}
+                <div className="p-5 space-y-4">
+                  <div className="grid grid-cols-3 gap-3">
+                    {[
+                      { label: 'Projects', value: '12', color: 'bg-orange-500', lightColor: 'bg-orange-50' },
+                      { label: 'Active Tasks', value: '47', color: 'bg-blue-500', lightColor: 'bg-blue-50' },
+                      { label: 'On Track', value: '94%', color: 'bg-emerald-500', lightColor: 'bg-emerald-50' },
+                    ].map((stat, i) => (
+                      <div
+                        key={i}
+                        className={`${stat.lightColor} rounded-xl p-3.5 animate-[fadeInUp_0.5s_ease_forwards] opacity-0`}
+                        style={{ animationDelay: `${i * 150 + 200}ms` }}
+                      >
+                        <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                        <p className="text-[11px] text-gray-500 mt-0.5">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="space-y-2">
+                    {[
+                      { name: 'Website Redesign', status: 'In Progress', pct: 68, color: 'bg-blue-500' },
+                      { name: 'Mobile App v2', status: 'On Track', pct: 45, color: 'bg-emerald-500' },
+                      { name: 'API Integration', status: 'Review', pct: 89, color: 'bg-amber-500' },
+                    ].map((project, i) => (
+                      <div
+                        key={i}
+                        className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg animate-[fadeInUp_0.5s_ease_forwards] opacity-0"
+                        style={{ animationDelay: `${i * 120 + 700}ms` }}
+                      >
+                        <div className={`w-1.5 h-8 rounded-full ${project.color}`} />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between">
+                            <span className="text-sm font-medium text-gray-800">{project.name}</span>
+                            <span className="text-[10px] text-gray-400">{project.pct}%</span>
+                          </div>
+                          <div className="mt-1.5 h-1 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full ${project.color} rounded-full transition-all duration-1000 ease-out`}
+                              style={{ width: `${project.pct}%`, animationDelay: `${i * 200 + 1000}ms` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Social Proof */}
+      <section className="py-12 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm font-medium text-gray-400 mb-8">
+            Trusted by teams at companies like
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
+            {['Acme Corp', 'Globex', 'TechStart', 'CloudServe', 'NexusIO'].map(
+              (name) => (
+                <span
+                  key={name}
+                  className="text-lg font-semibold text-gray-300 tracking-tight"
+                >
+                  {name}
+                </span>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Features — Alternating Layout */}
+      <section id="features" className="py-24 lg:py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mb-20">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">
+              Everything you need to deliver
+            </h2>
+            <p className="mt-4 text-lg text-gray-500">
+              A focused set of tools designed for teams who value clarity over
+              complexity.
+            </p>
+          </div>
+
+          <div className="space-y-24 lg:space-y-32">
+            {/* Feature 1 */}
+            <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+              <div>
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-orange-100 mb-5">
+                  <FolderKanban className="h-5 w-5 text-orange-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Project Tracking
+                </h3>
+                <p className="mt-3 text-gray-500 leading-relaxed">
+                  Organize work into projects with timelines, progress tracking,
+                  and team assignments. See every project&#39;s health at a glance.
+                </p>
+                <ul className="mt-6 space-y-3">
+                  {['Visual progress bars', 'Start & end dates', 'Status workflows'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 lg:mt-0">
+                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                  <div className="space-y-3">
+                    {['Website Redesign', 'Mobile App v2', 'Q1 Campaign'].map(
+                      (name, i) => (
+                        <div key={i} className="bg-white rounded-xl p-4 border border-gray-100 flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className={`w-2 h-2 rounded-full ${i === 0 ? 'bg-emerald-400' : i === 1 ? 'bg-blue-400' : 'bg-gray-300'}`} />
+                            <span className="text-sm font-medium text-gray-800">{name}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                              <div className={`h-full rounded-full ${i === 0 ? 'bg-emerald-400 w-3/4' : i === 1 ? 'bg-blue-400 w-1/2' : 'bg-gray-300 w-full'}`} />
+                            </div>
+                            <span className="text-[11px] text-gray-400 w-8">{i === 0 ? '75%' : i === 1 ? '50%' : '100%'}</span>
+                          </div>
+                        </div>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 2 — Reversed */}
+            <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+              <div className="order-2">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 mb-5">
+                  <CheckSquare className="h-5 w-5 text-blue-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Task Management
+                </h3>
+                <p className="mt-3 text-gray-500 leading-relaxed">
+                  Create, assign, and track tasks with priorities, due dates,
+                  and status workflows. Never lose track of what needs to happen next.
+                </p>
+                <ul className="mt-6 space-y-3">
+                  {['Priority levels', 'Assignee tracking', 'Due date alerts'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 lg:mt-0 order-1">
+                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                  <div className="space-y-2">
+                    {[
+                      { title: 'Design homepage', status: 'Done', statusColor: 'bg-emerald-100 text-emerald-700', priority: 'High' },
+                      { title: 'Set up CI/CD', status: 'In Progress', statusColor: 'bg-blue-100 text-blue-700', priority: 'Urgent' },
+                      { title: 'Write API docs', status: 'To Do', statusColor: 'bg-gray-100 text-gray-600', priority: 'Medium' },
+                      { title: 'User testing', status: 'Review', statusColor: 'bg-amber-100 text-amber-700', priority: 'High' },
+                    ].map((task, i) => (
+                      <div key={i} className="bg-white rounded-lg px-4 py-3 border border-gray-100 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-4 h-4 rounded border-2 flex items-center justify-center ${task.status === 'Done' ? 'bg-emerald-500 border-emerald-500' : 'border-gray-300'}`}>
+                            {task.status === 'Done' && (
+                              <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                              </svg>
+                            )}
+                          </div>
+                          <span className={`text-sm ${task.status === 'Done' ? 'text-gray-400 line-through' : 'text-gray-800'}`}>{task.title}</span>
+                        </div>
+                        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${task.statusColor}`}>{task.status}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+              <div>
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-violet-100 mb-5">
+                  <Users className="h-5 w-5 text-violet-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Contact Management
+                </h3>
+                <p className="mt-3 text-gray-500 leading-relaxed">
+                  Keep track of clients, partners, and leads with notes and
+                  project linking. Build stronger relationships with full context.
+                </p>
+                <ul className="mt-6 space-y-3">
+                  {['Company & role tracking', 'Notes & history', 'Project linking'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 lg:mt-0">
+                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                  <div className="space-y-3">
+                    {[
+                      { name: 'Sarah Johnson', role: 'Product Manager', company: 'Globex', type: 'Lead' },
+                      { name: 'James Wilson', role: 'VP Engineering', company: 'Acme Corp', type: 'Client' },
+                      { name: 'Lisa Chen', role: 'Head of Partnerships', company: 'CloudServe', type: 'Lead' },
+                    ].map((contact, i) => (
+                      <div key={i} className="bg-white rounded-xl p-4 border border-gray-100 flex items-center gap-4">
+                        <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center text-xs font-semibold text-gray-500 shrink-0">
+                          {contact.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-800 truncate">{contact.name}</p>
+                          <p className="text-[11px] text-gray-400 truncate">{contact.role} at {contact.company}</p>
+                        </div>
+                        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${contact.type === 'Client' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'}`}>
+                          {contact.type}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature 4 — Reversed */}
+            <div className="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+              <div className="order-2">
+                <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-emerald-100 mb-5">
+                  <BarChart3 className="h-5 w-5 text-emerald-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">
+                  Reports & Export
+                </h3>
+                <p className="mt-3 text-gray-500 leading-relaxed">
+                  Generate reports and export data to CSV. Get insights into
+                  team performance and project health at a glance.
+                </p>
+                <ul className="mt-6 space-y-3">
+                  {['CSV export', 'Task summaries', 'Project overviews'].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="mt-10 lg:mt-0 order-1">
+                <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                  <div className="space-y-4">
+                    <div className="flex items-end gap-2 h-32">
+                      {[35, 52, 41, 68, 75, 59, 82].map((h, i) => (
+                        <div key={i} className="flex-1 flex flex-col justify-end">
+                          <div
+                            className="bg-gray-900 rounded-t-sm transition-all"
+                            style={{ height: `${h}%` }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-between text-[10px] text-gray-400 px-1">
+                      {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => (
+                        <span key={d}>{d}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="py-16 border-y border-gray-100 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            {[
+              { value: '500+', label: 'Teams' },
+              { value: '50k+', label: 'Tasks completed' },
+              { value: '99.9%', label: 'Uptime' },
+              { value: '<2min', label: 'Setup time' },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <p className="text-3xl lg:text-4xl font-bold text-gray-900">{stat.value}</p>
+                <p className="mt-1 text-sm text-gray-500">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-24 bg-gray-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-800 via-gray-900 to-gray-900" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Ready to see your team&#39;s work clearly?
+          </h2>
+          <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
+            Join hundreds of teams using ProjectHub to ship faster.
+            Start your 14-day free trial — no credit card needed.
+          </p>
+          <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
+            <Button
+              asChild
+              size="lg"
+              className="bg-white hover:bg-gray-100 text-gray-900 rounded-full text-base px-8 h-12 font-medium"
+            >
+              <Link href="/sign-up">
+                Get Started Free
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+          <div className="mt-6 flex items-center justify-center gap-6 text-sm text-gray-500">
+            <span className="flex items-center gap-1.5"><Shield className="h-3.5 w-3.5" /> No credit card</span>
+            <span className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> 14-day trial</span>
+            <span className="flex items-center gap-1.5"><Zap className="h-3.5 w-3.5" /> Setup in 2 min</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-7 h-7 rounded-lg bg-gray-900 flex items-center justify-center">
+                  <span className="text-white text-xs font-bold">P</span>
+                </div>
+                <span className="font-semibold text-gray-900">ProjectHub</span>
+              </div>
+              <p className="text-sm text-gray-400 leading-relaxed">
+                Project management for teams that ship.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Product</h4>
+              <ul className="space-y-2">
+                <li><Link href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Features</Link></li>
+                <li><Link href="/pricing" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Pricing</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Account</h4>
+              <ul className="space-y-2">
+                <li><Link href="/sign-in" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sign In</Link></li>
+                <li><Link href="/sign-up" className="text-sm text-gray-500 hover:text-gray-900 transition-colors">Sign Up</Link></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-900 mb-3">Legal</h4>
+              <ul className="space-y-2">
+                <li><span className="text-sm text-gray-400">Privacy Policy</span></li>
+                <li><span className="text-sm text-gray-400">Terms of Service</span></li>
+              </ul>
+            </div>
+          </div>
+          <div className="pt-8 border-t border-gray-100 text-center">
+            <p className="text-sm text-gray-400">
+              &copy; {new Date().getFullYear()} ProjectHub. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }

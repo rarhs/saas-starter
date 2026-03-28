@@ -101,13 +101,18 @@ export const signIn = validatedAction(signInSchema, async (data, formData) => {
 });
 
 const signUpSchema = z.object({
+  name: z.string().max(100).optional(),
   email: z.string().email(),
-  password: z.string().min(8),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string().optional(),
   inviteId: z.string().optional(),
+}).refine((data) => !data.confirmPassword || data.password === data.confirmPassword, {
+  message: 'Passwords do not match',
+  path: ['confirmPassword'],
 });
 
 export const signUp = validatedAction(signUpSchema, async (data, formData) => {
-  const { email, password, inviteId } = data;
+  const { name, email, password, inviteId } = data;
 
   const existingUser = await db
     .select()
@@ -126,9 +131,10 @@ export const signUp = validatedAction(signUpSchema, async (data, formData) => {
   const passwordHash = await hashPassword(password);
 
   const newUser: NewUser = {
+    name: name || null,
     email,
     passwordHash,
-    role: 'owner', // Default role, will be overridden if there's an invitation
+    role: 'owner',
   };
 
   const [createdUser] = await db.insert(users).values(newUser).returning();
