@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**ProjectHub** — Project Management SaaS built with Next.js 15, React 19, TypeScript, Stripe billing, JWT auth, and Drizzle ORM on Supabase (PostgreSQL). Features: project/task management, contact/client management, team collaboration, dashboard analytics, and CSV/PDF report export.
+**ProjectHub** — Project Management SaaS built with Next.js 16, React 19, TypeScript, Stripe billing, JWT auth, and Drizzle ORM on Supabase (PostgreSQL). Features: project/task management, contact/client management, team collaboration, dashboard analytics, and CSV/PDF report export.
 
 All pages are wired to **real Supabase data**. Mock data file (`lib/db/mock-data.ts`) exists but is no longer used.
 
@@ -22,7 +22,21 @@ pnpm db:seed          # Seed with test data (test@test.com / admin123)
 pnpm db:studio        # Drizzle Studio GUI
 ```
 
-No test or lint scripts are configured.
+No test or lint scripts are configured yet. Type-checking: `npx tsc --noEmit`.
+
+## Testing Requirements
+
+**Minimum (pre-launch):**
+- TypeScript type-checking (`npx tsc --noEmit`) — already works
+- Linting with ESLint + `eslint-config-next` (`next lint`)
+
+**Should have:**
+- E2E tests with Playwright — critical flows: sign up → create project → create task → change status → delete
+- Server action tests — verify CRUD operations, free plan limit enforcement, auth guards
+
+**Nice to have:**
+- Unit tests with Vitest for shared utilities (`formatDate`, `formatStatus`, `checkProjectLimit`, etc.)
+- CI pipeline via GitHub Actions: run `tsc --noEmit` + `next lint` + tests on every PR
 
 ## Architecture
 
@@ -62,7 +76,7 @@ Action files:
 - `app/(login)/actions.ts` — auth, account, team management
 - `lib/actions/projects.ts` — createProject, updateProject, deleteProject
 - `lib/actions/tasks.ts` — createTask, updateTaskStatus, deleteTask
-- `lib/actions/contacts.ts` — createContact, deleteContact
+- `lib/actions/contacts.ts` — createContact, updateContact, deleteContact
 
 ### Database
 
